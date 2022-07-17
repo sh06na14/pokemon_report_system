@@ -55,7 +55,7 @@
                 </c:choose>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='?action=${actPlayer}&command=${commNew}' />">新規Playerの登録</a></p>
+        <p><a href="<c:url value='?action=${actPlayer}&command=${commNew}' />">新規プレイヤーの登録</a></p>
 
     </c:param>
 </c:import>
