@@ -4,7 +4,7 @@ public enum ForwardConst {
   //action
     ACT("action"),
     ACT_TOP("Top"),
-    ACT_EMP("Employee"),
+    ACT_Player("Player"),
     ACT_REP("Report"),
     ACT_AUTH("Auth"),
 
@@ -26,10 +26,10 @@ public enum ForwardConst {
     FW_ERR_UNKNOWN("error/unknown"),
     FW_TOP_INDEX("topPage/index"),
     FW_LOGIN("login/login"),
-    FW_EMP_INDEX("employees/index"),
-    FW_EMP_SHOW("employees/show"),
-    FW_EMP_NEW("employees/new"),
-    FW_EMP_EDIT("employees/edit"),
+    FW_PLAYER_INDEX("players/index"),
+    FW_PLAYER_SHOW("players/show"),
+    FW_PLAYER_NEW("players/new"),
+    FW_PLAYER_EDIT("players/edit"),
     FW_REP_INDEX("reports/index"),
     FW_REP_SHOW("reports/show"),
     FW_REP_NEW("reports/new"),

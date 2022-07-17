@@ -19,14 +19,14 @@ public enum AttributeConst {
     LOGIN_ERR("loginError"),
 
     //従業員管理
-    EMPLOYEE("employee"),
-    EMPLOYEES("employees"),
-    EMP_COUNT("employees_count"),
-    EMP_ID("id"),
-    EMP_CODE("code"),
-    EMP_PASS("password"),
-    EMP_NAME("name"),
-    EMP_ADMIN_FLG("admin_flag"),
+    PLAYER("player"),
+    PLAYERS("players"),
+    PLAYER_COUNT("players_count"),
+    PLAYER_ID("id"),
+    PLAYER_CODE("code"),
+    PLAYER_PASS("password"),
+    PLAYER_NAME("name"),
+    PLAYER_ADMIN_FLG("admin_flag"),
 
     //管理者フラグ
     ROLE_ADMIN(1),
