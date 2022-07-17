@@ -9,6 +9,8 @@ import actions.views.PlayerView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
+import constants.MessageConst;
+import constants.PropertyConst;
 import services.PlayerService;
 
 public class PlayerAction extends ActionBase {
@@ -73,5 +75,54 @@ public class PlayerAction extends ActionBase {
         forward(ForwardConst.FW_PLAYER_NEW);
     }
 
+    /**
+     * 新規登録を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void create() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+            //パラメータの値を元に従業員情報のインスタンスを作成する
+            PlayerView pv = new PlayerView(
+                    null,
+                    getRequestParam(AttributeConst.PLAYER_CODE),
+                    getRequestParam(AttributeConst.PLAYER_NAME),
+                    getRequestParam(AttributeConst.PLAYER_PASS),
+                    toNumber(getRequestParam(AttributeConst.PLAYER_ADMIN_FLG)),
+                    null,
+                    null,
+                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
+
+            //アプリケーションスコープからpepper文字列を取得
+            String pepper = getContextScope(PropertyConst.PEPPER);
+
+            //従業員情報登録
+            List<String> errors = service.create(pv, pepper);
+
+            if (errors.size() > 0) {
+                //登録中にエラーがあった場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.PLAYER, pv); //入力された従業員情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //新規登録画面を再表示
+                forward(ForwardConst.FW_PLAYER_NEW);
+
+            } else {
+                //登録中にエラーがなかった場合
+
+                //セッションに登録完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_Player, ForwardConst.CMD_INDEX);
+            }
+
+        }
+    }
 
 }
