@@ -173,4 +173,51 @@ public class PlayerAction extends ActionBase {
 
     }
 
+    /**
+     * 更新を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void update() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+            //パラメータの値を元に従業員情報のインスタンスを作成する
+            PlayerView pv = new PlayerView(
+                    toNumber(getRequestParam(AttributeConst.PLAYER_ID)),
+                    getRequestParam(AttributeConst.PLAYER_CODE),
+                    getRequestParam(AttributeConst.PLAYER_NAME),
+                    getRequestParam(AttributeConst.PLAYER_PASS),
+                    toNumber(getRequestParam(AttributeConst.PLAYER_ADMIN_FLG)),
+                    null,
+                    null,
+                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
+
+            //アプリケーションスコープからpepper文字列を取得
+            String pepper = getContextScope(PropertyConst.PEPPER);
+
+            //従業員情報更新
+            List<String> errors = service.update(pv, pepper);
+
+            if (errors.size() > 0) {
+                //更新中にエラーが発生した場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.PLAYER, pv); //入力された従業員情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //編集画面を再表示
+                forward(ForwardConst.FW_PLAYER_EDIT);
+            } else {
+                //更新中にエラーがなかった場合
+
+                //セッションに更新完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_Player, ForwardConst.CMD_INDEX);
+            }
+        }
+    }
+
 }
