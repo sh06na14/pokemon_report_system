@@ -220,4 +220,25 @@ public class PlayerAction extends ActionBase {
         }
     }
 
+    /**
+     * 論理削除を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void destroy() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+            //idを条件に従業員データを論理削除する
+            service.destroy(toNumber(getRequestParam(AttributeConst.PLAYER_ID)));
+
+            //セッションに削除完了のフラッシュメッセージを設定
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETED.getMessage());
+
+            //一覧画面にリダイレクト
+            redirect(ForwardConst.ACT_Player, ForwardConst.CMD_INDEX);
+        }
+    }
+
 }
