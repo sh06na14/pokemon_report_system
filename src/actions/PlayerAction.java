@@ -148,4 +148,29 @@ public class PlayerAction extends ActionBase {
         forward(ForwardConst.FW_PLAYER_SHOW);
     }
 
+    /**
+     * 編集画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void edit() throws ServletException, IOException {
+
+        //idを条件に従業員データを取得する
+        PlayerView pv = service.findOne(toNumber(getRequestParam(AttributeConst.PLAYER_ID)));
+
+        if (pv == null || pv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+
+            //データが取得できなかった、または論理削除されている場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return;
+        }
+
+        putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+        putRequestScope(AttributeConst.PLAYER, pv); //取得した従業員情報
+
+        //編集画面を表示する
+        forward(ForwardConst.FW_PLAYER_EDIT);
+
+    }
+
 }
