@@ -134,3 +134,11 @@ select {
 h1 a {
     color: #eeeeee;
 }
+
+#login {
+    color: #cccccc;
+    width: 36%;
+    padding-right: 3%;
+    text-align: right;
+    display: inline-block;
+}

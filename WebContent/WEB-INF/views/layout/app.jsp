@@ -10,6 +10,10 @@
 
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commOut" value="${ForwardConst.CMD_LOGOUT.getValue()}" />
+<c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
+<c:set var="commShow_Login" value="${ForwardConst.CMD_SHOW_LOGIN.getValue()}" />
+
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -24,11 +28,11 @@
         <div id="header">
             <div id="header_menu">
                 <h1><a href="<c:url value='/?action=${actTop}&command=${commIdx}' />">ポケモン育成論管理システム</a></h1>&nbsp;&nbsp;&nbsp;
+                <a href="<c:url value='?action=${actRep}&command=${commIdx}' />">育成論管理</a>&nbsp;
                 <c:if test="${sessionScope.login_player != null}">
                     <c:if test="${sessionScope.login_player.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">
                         <a href="<c:url value='?action=${actPlayer}&command=${commIdx}' />">プレイヤー管理</a>&nbsp;
                     </c:if>
-                    <a href="<c:url value='?action=${actRep}&command=${commIdx}' />">育成論管理</a>&nbsp;
                 </c:if>
             </div>
             <c:if test="${sessionScope.login_player != null}">
@@ -36,6 +40,12 @@
                     <c:out value="${sessionScope.login_player.name}" />
                     &nbsp;さん&nbsp;&nbsp;&nbsp;
                     <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
+                </div>
+            </c:if>
+            <c:if test="${sessionScope.login_player == null}">
+                <div id="login">
+                    <a href="<c:url value='?action=${actPlayer}&command=${commNew}' />">会員登録　</a>
+                    <a href="<c:url value='?action=${actAuth}&command=${commShow_Login}' />">ログイン</a>
                 </div>
             </c:if>
         </div>
