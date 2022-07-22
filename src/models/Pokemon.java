@@ -65,7 +65,7 @@ public class Pokemon {
     /**
      * タイプ2
      */
-    @Column(name = "type2", nullable = false)
+    @Column(name = "type2")
     private String type2;
 
     /**

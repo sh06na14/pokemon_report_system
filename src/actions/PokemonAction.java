@@ -9,6 +9,7 @@ import actions.views.PokemonView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
+import constants.MessageConst;
 import services.PokemonService;
 
 public class PokemonAction extends ActionBase {
@@ -73,4 +74,54 @@ public class PokemonAction extends ActionBase {
         forward(ForwardConst.FW_POKEMON_NEW);
     }
 
+    /**
+     * 新規登録を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void create() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+            //パラメータの値を元に従業員情報のインスタンスを作成する
+            PokemonView pv = new PokemonView(
+                    null,
+                    getRequestParam(AttributeConst.POKEMON_CODE),
+                    getRequestParam(AttributeConst.POKEMON_NAME),
+                    getRequestParam(AttributeConst.POKEMON_TYPE_A),
+                    getRequestParam(AttributeConst.POKEMON_TYPE_B),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_HP)),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_ATTACK)),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_DEFENSE)),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_SPECIAL_ATTACK)),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_SPECIAL_DEFENSE)),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_SPEED)),
+                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
+
+            //従業員情報登録
+            List<String> errors = service.create(pv);
+
+            if (errors.size() > 0) {
+                //登録中にエラーがあった場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.POKEMON, pv); //入力された従業員情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //新規登録画面を再表示
+                forward(ForwardConst.FW_POKEMON_NEW);
+
+            } else {
+                //登録中にエラーがなかった場合
+
+                //セッションに登録完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_Pokemon, ForwardConst.CMD_INDEX);
+            }
+
+        }
+    }
 }
