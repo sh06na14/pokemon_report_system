@@ -14,6 +14,6 @@
         <form method="POST" action="<c:url value='?action=${actPlayer}&command=${commCrt}' />">
             <c:import url="_form.jsp" />
         </form>
-
+        <p><a href="<c:url value='?action=${actPlayer}&command=${commIdx}' />">一覧に戻る</a></p>
     </c:param>
 </c:import>

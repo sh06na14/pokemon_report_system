@@ -52,7 +52,7 @@ public class PlayerValidator {
 
         //入力値がなければエラーメッセージを返却
         if (code == null || code.equals("")) {
-            return MessageConst.E_NOEMP_CODE.getMessage();
+            return MessageConst.E_NOPLAYER_CODE.getMessage();
         }
 
         if (codeDuplicateCheckFlag) {
@@ -62,7 +62,7 @@ public class PlayerValidator {
 
             //同一社員番号が既に登録されている場合はエラーメッセージを返却
             if (employeesCount > 0) {
-                return MessageConst.E_EMP_CODE_EXIST.getMessage();
+                return MessageConst.E_PLAYER_CODE_EXIST.getMessage();
             }
         }
 

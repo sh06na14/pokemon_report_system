@@ -28,17 +28,10 @@
 <br /><br />
 
 <label for="${AttributeConst.PLAYER_ADMIN_FLG.getValue()}">権限</label><br />
-<c:if test="${sessionScope.login_player.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">
-    <select name="${AttributeConst.PLAYER_ADMIN_FLG.getValue()}" id="${AttributeConst.PLAYER_ADMIN_FLG.getValue()}">
-        <option value="${AttributeConst.ROLE_GENERAL.getIntegerValue()}"<c:if test="${player.adminFlag == AttributeConst.ROLE_GENERAL.getIntegerValue()}"> selected</c:if>>一般</option>
-        <option value="${AttributeConst.ROLE_ADMIN.getIntegerValue()}"<c:if test="${player.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}"> selected</c:if>>管理者</option>
-    </select>
-</c:if>
-<c:if test="${sessionScope.login_player.adminFlag != AttributeConst.ROLE_ADMIN.getIntegerValue()}">
-    <select name="${AttributeConst.PLAYER_ADMIN_FLG.getValue()}" id="${AttributeConst.PLAYER_ADMIN_FLG.getValue()}">
-        <option value="${AttributeConst.ROLE_GENERAL.getIntegerValue()}"<c:if test="${player.adminFlag == AttributeConst.ROLE_GENERAL.getIntegerValue()}"> selected</c:if>>一般</option>
-    </select>
-</c:if>
+<select name="${AttributeConst.PLAYER_ADMIN_FLG.getValue()}" id="${AttributeConst.PLAYER_ADMIN_FLG.getValue()}">
+    <option value="${AttributeConst.ROLE_GENERAL.getIntegerValue()}"<c:if test="${player.adminFlag == AttributeConst.ROLE_GENERAL.getIntegerValue()}"> selected</c:if>>一般</option>
+    <option value="${AttributeConst.ROLE_ADMIN.getIntegerValue()}"<c:if test="${player.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}"> selected</c:if>>管理者</option>
+</select>
 
 <br /><br />
 <input type="hidden" name="${AttributeConst.PLAYER_ID.getValue()}" value="${player.id}" />

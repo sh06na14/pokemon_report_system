@@ -28,6 +28,22 @@ public enum AttributeConst {
     PLAYER_NAME("name"),
     PLAYER_ADMIN_FLG("admin_flag"),
 
+  //ポケモン管理
+    POKEMON("pokemon"),
+    POKEMONS("pokemons"),
+    POKEMON_COUNT("pokemons_count"),
+    POKEMON_ID("id"),
+    POKEMON_CODE("code"),
+    POKEMON_NAME("name"),
+    POKEMON_TYPE_A("type1"),
+    POKEMON_TYPE_B("type2"),
+    POKEMON_HP("hitPoints"),
+    POKEMON_ATTACK("attack"),
+    POKEMON_DEFENSE("defense"),
+    POKEMON_SPECIAL_ATTACK("specialAttack"),
+    POKEMON_SPECIAL_DEFENSE("specialDefense"),
+    POKEMON_SPEED("speed"),
+
     //管理者フラグ
     ROLE_ADMIN(1),
     ROLE_GENERAL(0),

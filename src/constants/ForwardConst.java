@@ -5,6 +5,7 @@ public enum ForwardConst {
     ACT("action"),
     ACT_TOP("Top"),
     ACT_Player("Player"),
+    ACT_Pokemon("Pokemon"),
     ACT_REP("Report"),
     ACT_AUTH("Auth"),
 
@@ -30,6 +31,10 @@ public enum ForwardConst {
     FW_PLAYER_SHOW("players/show"),
     FW_PLAYER_NEW("players/new"),
     FW_PLAYER_EDIT("players/edit"),
+    FW_POKEMON_INDEX("pokemons/index"),
+    FW_POKEMON_SHOW("pokemons/show"),
+    FW_POKEMON_NEW("pokemons/new"),
+    FW_POKEMON_EDIT("pokemons/edit"),
     FW_REP_INDEX("reports/index"),
     FW_REP_SHOW("reports/show"),
     FW_REP_NEW("reports/new"),

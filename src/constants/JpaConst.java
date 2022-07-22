@@ -11,7 +11,7 @@ public interface JpaConst {
     String TABLE_PLayer = "players"; //テーブル名
     //従業員テーブルカラム
     String PLayer_COL_ID = "id"; //id
-    String PLayer_COL_CODE = "code"; //社員番号
+    String PLayer_COL_CODE = "code"; //プレイヤー番号
     String PLayer_COL_NAME = "name"; //氏名
     String PLayer_COL_PASS = "password"; //パスワード
     String PLayer_COL_ADMIN_FLAG = "admin_flag"; //管理者権限
@@ -23,6 +23,8 @@ public interface JpaConst {
     int ROLE_GENERAL = 0; //管理者権限OFF(一般)
     int PLayer_DEL_TRUE = 1; //削除フラグON(削除済み)
     int PLayer_DEL_FALSE = 0; //削除フラグOFF(現役)
+    int Pokemon_DEL_TRUE = 1; //削除フラグON(削除済み)
+    int Pokemon_DEL_FALSE = 0; //削除フラグOFF(現役)
 
     //日報テーブル
     String TABLE_REP = "reports"; //テーブル名

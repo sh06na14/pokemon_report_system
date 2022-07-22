@@ -5,6 +5,7 @@
 
 <c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
 <c:set var="actPlayer" value="${ForwardConst.ACT_Player.getValue()}" />
+<c:set var="actPokemon" value="${ForwardConst.ACT_Pokemon.getValue()}" />
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
 <c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
 
@@ -32,6 +33,7 @@
                 <c:if test="${sessionScope.login_player != null}">
                     <c:if test="${sessionScope.login_player.adminFlag == AttributeConst.ROLE_ADMIN.getIntegerValue()}">
                         <a href="<c:url value='?action=${actPlayer}&command=${commIdx}' />">プレイヤー管理</a>&nbsp;
+                        <a href="<c:url value='?action=${actPokemon}&command=${commIdx}' />">ポケモン管理</a>&nbsp;
                     </c:if>
                 </c:if>
             </div>
@@ -44,7 +46,6 @@
             </c:if>
             <c:if test="${sessionScope.login_player == null}">
                 <div id="login">
-                    <a href="<c:url value='?action=${actPlayer}&command=${commNew}' />">会員登録　</a>
                     <a href="<c:url value='?action=${actAuth}&command=${commShow_Login}' />">ログイン</a>
                 </div>
             </c:if>
