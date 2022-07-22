@@ -146,4 +146,78 @@ public class PokemonAction extends ActionBase {
         //詳細画面を表示
         forward(ForwardConst.FW_POKEMON_SHOW);
     }
+
+    /**
+     * 編集画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void edit() throws ServletException, IOException {
+
+        //idを条件に従業員データを取得する
+        PokemonView pv = service.findOne(toNumber(getRequestParam(AttributeConst.POKEMON_ID)));
+
+        if (pv == null || pv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+
+            //データが取得できなかった、または論理削除されている場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return;
+        }
+
+        putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+        putRequestScope(AttributeConst.POKEMON, pv); //取得した従業員情報
+
+        //編集画面を表示する
+        forward(ForwardConst.FW_POKEMON_EDIT);
+
+    }
+
+    /**
+     * 更新を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void update() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+            //パラメータの値を元に従業員情報のインスタンスを作成する
+            PokemonView pv = new PokemonView(
+                    toNumber(getRequestParam(AttributeConst.POKEMON_ID)),
+                    getRequestParam(AttributeConst.POKEMON_CODE),
+                    getRequestParam(AttributeConst.POKEMON_NAME),
+                    getRequestParam(AttributeConst.POKEMON_TYPE_A),
+                    getRequestParam(AttributeConst.POKEMON_TYPE_B),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_HP)),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_ATTACK)),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_DEFENSE)),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_SPECIAL_ATTACK)),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_SPECIAL_DEFENSE)),
+                    toNumber(getRequestParam(AttributeConst.POKEMON_SPEED)),
+                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
+
+
+            //従業員情報更新
+            List<String> errors = service.update(pv);
+
+            if (errors.size() > 0) {
+                //更新中にエラーが発生した場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.POKEMON, pv); //入力された従業員情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //編集画面を再表示
+                forward(ForwardConst.FW_POKEMON_EDIT);
+            } else {
+                //更新中にエラーがなかった場合
+
+                //セッションに更新完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_Pokemon, ForwardConst.CMD_INDEX);
+            }
+        }
+    }
 }
