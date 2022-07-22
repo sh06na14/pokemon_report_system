@@ -124,4 +124,26 @@ public class PokemonAction extends ActionBase {
 
         }
     }
+    /**
+     * 詳細画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void show() throws ServletException, IOException {
+
+        //idを条件に従業員データを取得する
+        PokemonView pv = service.findOne(toNumber(getRequestParam(AttributeConst.POKEMON_ID)));
+
+        if (pv == null || pv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+
+            //データが取得できなかった、または論理削除されている場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return;
+        }
+
+        putRequestScope(AttributeConst.POKEMON, pv); //取得した従業員情報
+
+        //詳細画面を表示
+        forward(ForwardConst.FW_POKEMON_SHOW);
+    }
 }
