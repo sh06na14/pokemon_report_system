@@ -16,14 +16,14 @@
             </div>
         </c:if>
         <h2>ポケモン　一覧</h2>
-        <table id="employee_list">
+        <table id="pokemon_list">
             <tbody>
                 <tr>
                     <th>図鑑番号</th>
                     <th>名前</th>
                     <th>操作</th>
                 </tr>
-                <c:forEach var="employee" items="${pokemons}" varStatus="status">
+                <c:forEach var="pokemon" items="${pokemons}" varStatus="status">
                     <tr class="row${status.count % 2}">
                         <td><c:out value="${pokemon.code}" /></td>
                         <td><c:out value="${pokemon.name}" /></td>
@@ -55,7 +55,7 @@
                 </c:choose>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='?action=${actPokemon}&command=${commNew}' />">新規従業員の登録</a></p>
+        <p><a href="<c:url value='?action=${actPokemon}&command=${commNew}' />">新規ポケモンの登録</a></p>
 
     </c:param>
 </c:import>

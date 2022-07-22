@@ -142,3 +142,13 @@ h1 a {
     text-align: right;
     display: inline-block;
 }
+
+table#pokemon_list th {
+    width: 30%;
+    padding: 10px 2%;
+}
+
+table#pokemon_list td {
+    width: 29%;
+    padding: 10px 2%;
+}
