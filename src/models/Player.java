@@ -47,7 +47,7 @@ public class Player {
     private Integer id;
 
     /**
-     * 社員番号
+     * プレイヤー番号
      */
     @Column(name = "code", nullable = false, unique = true)
     private String code;
