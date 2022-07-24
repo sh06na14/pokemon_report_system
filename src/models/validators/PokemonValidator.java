@@ -32,6 +32,12 @@ public class PokemonValidator {
             errors.add(nameError);
         }
 
+      //名前のチェック
+        String typeError = validateType1(pv.getType1());
+        if (!typeError.equals("")) {
+            errors.add(typeError);
+        }
+
         return errors;
     }
 
@@ -89,5 +95,21 @@ public class PokemonValidator {
         //入力値がある場合は空文字を返却
         return "";
     }
+
+    /**
+     * 氏名に入力値があるかをチェックし、入力値がなければエラーメッセージを返却
+     * @param name 氏名
+     * @return エラーメッセージ
+     */
+    private static String validateType1(String type1) {
+
+        if (type1 == null || type1.equals("")) {
+            return MessageConst.E_NOPOKEN_TYPE.getMessage();
+        }
+
+        //入力値がある場合は空文字を返却
+        return "";
+    }
+
 
 }

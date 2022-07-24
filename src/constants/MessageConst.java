@@ -19,6 +19,7 @@ public enum MessageConst {
     E_NOTITLE("タイトルを入力してください。"),
     E_NOCONTENT("内容を入力してください。"),
     E_NOPOKEN_CODE("図鑑番号を入力してください。"),
+    E_NOPOKEN_TYPE("タイプを入力してください。"),
     E_POKEN_CODE_EXIST("入力された図鑑番号の情報は既に存在しています。");
 
 

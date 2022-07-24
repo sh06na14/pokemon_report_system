@@ -20,7 +20,7 @@ public class PlayerValidator {
             PlayerService service, PlayerView pv, Boolean codeDuplicateCheckFlag, Boolean passwordCheckFlag) {
         List<String> errors = new ArrayList<String>();
 
-        //社員番号のチェック
+        //プレイヤー番号のチェック
         String codeError = validateCode(service, pv.getCode(), codeDuplicateCheckFlag);
         if (!codeError.equals("")) {
             errors.add(codeError);
@@ -42,9 +42,9 @@ public class PlayerValidator {
     }
 
     /**
-     * 社員番号の入力チェックを行い、エラーメッセージを返却
+     * プレイヤー番号の入力チェックを行い、エラーメッセージを返却
      * @param service EmployeeServiceのインスタンス
-     * @param code 社員番号
+     * @param code プレイヤー番号
      * @param codeDuplicateCheckFlag 社員番号の重複チェックを実施するかどうか(実施する:true 実施しない:false)
      * @return エラーメッセージ
      */
@@ -56,7 +56,7 @@ public class PlayerValidator {
         }
 
         if (codeDuplicateCheckFlag) {
-            //社員番号の重複チェックを実施
+            //プレイヤー番号の重複チェックを実施
 
             long employeesCount = isDuplicatePlayer(service, code);
 
