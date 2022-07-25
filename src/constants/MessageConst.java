@@ -20,7 +20,16 @@ public enum MessageConst {
     E_NOCONTENT("内容を入力してください。"),
     E_NOPOKEN_CODE("図鑑番号を入力してください。"),
     E_NOPOKEN_TYPE("タイプを入力してください。"),
-    E_POKEN_CODE_EXIST("入力された図鑑番号の情報は既に存在しています。");
+    E_POKEN_CODE_EXIST("入力された図鑑番号の情報は既に存在しています。"),
+    E_NOPOKEN_ABILITY("特性を入力してください。"),
+    E_NOPOKEN_NATURE("性格を入力してください。"),
+    E_NOPOKEN_MOVE1("わざ１を入力してください。"),
+    E_NOPOKEN_MOVE2("わざ２を入力してください。"),
+    E_NOPOKEN_MOVE3("わざ３を入力してください。"),
+    E_NOPOKEN_MOVE4("わざ４を入力してください。"),
+    E_NOPOKEN_ITEM("持ち物を入力してください。"),
+    E_MISS_EffortValue_SUM("基礎ポイントの合計が508でありません。"),
+    E_MISS_EffortValue_MAX("基礎ポイントの最大値が252を超えています。");
 
 
     /**

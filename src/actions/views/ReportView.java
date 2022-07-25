@@ -39,9 +39,14 @@ public class ReportView {
     private String title;
 
     /**
-     * とくせい
+     * 特性
      */
     private String ability;
+
+    /**
+     * 性格
+     */
+    private String nature;
 
     /**
      * 基礎ポイント(HP)
@@ -76,25 +81,25 @@ public class ReportView {
     /**
      * わざ1
      */
-    private String move_A;
+    private String move1;
 
     /**
      * わざ2
      */
-    private String move_B;
+    private String move2;
 
     /**
      * わざ3
      */
-    private String move_C;
+    private String move3;
 
     /**
      * わざ4
      */
-    private String move_D;
+    private String move4;
 
     /**
-     * もちもの
+     * 持ち物
      */
     private String heldItem;
 

@@ -21,16 +21,17 @@ public class ReportConverter {
                 rv.getReportDate(),
                 rv.getTitle(),
                 rv.getAbility(),
+                rv.getNature(),
                 rv.getHitPoints(),
                 rv.getAttack(),
                 rv.getDefense(),
                 rv.getSpecialAttack(),
                 rv.getSpecialDefense(),
                 rv.getSpeed(),
-                rv.getMove_A(),
-                rv.getMove_B(),
-                rv.getMove_C(),
-                rv.getMove_D(),
+                rv.getMove1(),
+                rv.getMove2(),
+                rv.getMove3(),
+                rv.getMove4(),
                 rv.getHeldItem(),
                 rv.getComment(),
                 rv.getCreatedAt(),
@@ -60,16 +61,17 @@ public class ReportConverter {
                 r.getReportDate(),
                 r.getTitle(),
                 r.getAbility(),
+                r.getNature(),
                 r.getHitPoints(),
                 r.getAttack(),
                 r.getDefense(),
                 r.getSpecialAttack(),
                 r.getSpecialDefense(),
                 r.getSpeed(),
-                r.getMove_A(),
-                r.getMove_B(),
-                r.getMove_C(),
-                r.getMove_D(),
+                r.getMove1(),
+                r.getMove2(),
+                r.getMove3(),
+                r.getMove4(),
                 r.getHeldItem(),
                 r.getComment(),
                 r.getCreatedAt(),
@@ -108,17 +110,17 @@ public class ReportConverter {
         r.setReportDate(rv.getReportDate());
         r.setTitle(rv.getTitle());
         r.setAbility(rv.getAbility());
+        r.setNature(rv.getNature());
         r.setHitPoints(rv.getHitPoints());
         r.setAttack(rv.getAttack());
         r.setDefense(rv.getDefense());
         r.setSpecialAttack(rv.getSpecialAttack());
         r.setSpecialDefense(rv.getSpecialDefense());
         r.setSpeed(rv.getSpeed());
-        r.setMove_A(rv.getMove_A());
-        r.setMove_B(rv.getMove_B());
-        r.setMove_C(rv.getMove_C());
-        r.setMove_D(rv.getMove_D());
-        r.setMove_D(rv.getMove_D());
+        r.setMove1(rv.getMove1());
+        r.setMove2(rv.getMove2());
+        r.setMove3(rv.getMove3());
+        r.setMove4(rv.getMove4());
         r.setHeldItem(rv.getHeldItem());
         r.setComment(rv.getComment());
         r.setCreatedAt(rv.getCreatedAt());

@@ -77,10 +77,16 @@ public class Report {
     private String title;
 
     /**
-     * とくせい
+     * 特性
      */
     @Column(name = "ability", nullable = false)
     private String ability;
+
+    /**
+     * 性格
+     */
+    @Column(name = "nature", nullable = false)
+    private String nature;
 
     /**
      * 基礎ポイント(HP)
@@ -121,29 +127,29 @@ public class Report {
     /**
      * わざ1
      */
-    @Column(name = "move_A", nullable = false)
-    private String move_A;
+    @Column(name = "move1", nullable = false)
+    private String move1;
 
     /**
      * わざ2
      */
-    @Column(name = "move_B", nullable = false)
-    private String move_B;
+    @Column(name = "move2", nullable = false)
+    private String move2;
 
     /**
      * わざ3
      */
-    @Column(name = "move_C", nullable = false)
-    private String move_C;
+    @Column(name = "move3", nullable = false)
+    private String move3;
 
     /**
      * わざ4
      */
-    @Column(name = "move_D", nullable = false)
-    private String move_D;
+    @Column(name = "move4", nullable = false)
+    private String move4;
 
     /**
-     * もちもの
+     * 持ち物
      */
     @Column(name = "heldItem", nullable = false)
     private String heldItem;
