@@ -144,9 +144,8 @@ public class PokemonAction extends ActionBase {
         }
 
         putRequestScope(AttributeConst.POKEMON, pv); //取得したポケモン情報
-
-        //詳細画面を表示
         request.setAttribute("sum", sum);
+        //詳細画面を表示
         forward(ForwardConst.FW_POKEMON_SHOW);
 
     }
