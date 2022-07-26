@@ -134,6 +134,8 @@ public class PokemonAction extends ActionBase {
         //idを条件に従業員データを取得する
         PokemonView pv = service.findOne(toNumber(getRequestParam(AttributeConst.POKEMON_ID)));
 
+        int sum = pv.getHitPoints() + pv.getAttack() + pv.getDefense() + pv.getSpecialAttack() + pv.getSpecialDefense() + pv.getSpeed();
+
         if (pv == null || pv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
 
             //データが取得できなかった、または論理削除されている場合はエラー画面を表示
@@ -144,7 +146,9 @@ public class PokemonAction extends ActionBase {
         putRequestScope(AttributeConst.POKEMON, pv); //取得したポケモン情報
 
         //詳細画面を表示
+        request.setAttribute("sum", sum);
         forward(ForwardConst.FW_POKEMON_SHOW);
+
     }
 
     /**

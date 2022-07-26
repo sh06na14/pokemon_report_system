@@ -55,6 +55,10 @@
                     <th>すばやさ</th>
                     <td><c:out value="${pokemon.speed}" /></td>
                 </tr>
+                <tr>
+                    <th>合計</th>
+                    <td><c:out value="${sum}" /></td>
+                </tr>
             </tbody>
         </table>
 
