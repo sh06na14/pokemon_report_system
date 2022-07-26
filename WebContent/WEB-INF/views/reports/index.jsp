@@ -4,9 +4,10 @@
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
+<c:set var="actPokemon" value="${ForwardConst.ACT_Pokemon.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
-<c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
+<c:set var="commSearch" value="${ForwardConst.CMD_SHOW_SEARCH.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -50,7 +51,7 @@
                 </c:choose>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規育成論の登録</a></p>
+        <p><a href="<c:url value='?action=${actPokemon}&command=${commSearch}' />">新規育成論の登録</a></p>
 
     </c:param>
 </c:import>

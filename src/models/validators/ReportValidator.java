@@ -182,7 +182,7 @@ public class ReportValidator {
      * @return エラーメッセージ
      */
     private static String validateEffortValueTotal(int hitPoints, int attack, int defense, int specialAttack, int specialDefense, int speed) {
-        if (hitPoints + attack + defense + specialAttack + specialDefense + speed == 508) {
+        if (hitPoints + attack + defense + specialAttack + specialDefense + speed != 508) {
             return MessageConst.E_MISS_EffortValue_SUM.getMessage();
         }
         //入力値がある場合は空文字を返却

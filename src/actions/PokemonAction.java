@@ -40,7 +40,7 @@ public class PokemonAction extends ActionBase {
         int page = getPage();
         List<PokemonView> pokemons = service.getPerPage(page);
 
-        //全ての従業員データの件数を取得
+        //全てのポケモンデータの件数を取得
         long pokemonCount = service.countAll();
 
         putRequestScope(AttributeConst.POKEMONS, pokemons); //取得したポケモンデータ
@@ -68,7 +68,7 @@ public class PokemonAction extends ActionBase {
     public void entryNew() throws ServletException, IOException {
 
         putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-        putRequestScope(AttributeConst.POKEMON, new PokemonView()); //空の従業員インスタンス
+        putRequestScope(AttributeConst.POKEMON, new PokemonView()); //空のポケモンインスタンス
 
         //新規登録画面を表示
         forward(ForwardConst.FW_POKEMON_NEW);
@@ -84,7 +84,7 @@ public class PokemonAction extends ActionBase {
         //CSRF対策 tokenのチェック
         if (checkToken()) {
 
-            //パラメータの値を元に従業員情報のインスタンスを作成する
+            //パラメータの値を元にポケモン情報のインスタンスを作成する
             PokemonView pv = new PokemonView(
                     null,
                     getRequestParam(AttributeConst.POKEMON_CODE),
@@ -141,7 +141,7 @@ public class PokemonAction extends ActionBase {
             return;
         }
 
-        putRequestScope(AttributeConst.POKEMON, pv); //取得した従業員情報
+        putRequestScope(AttributeConst.POKEMON, pv); //取得したポケモン情報
 
         //詳細画面を表示
         forward(ForwardConst.FW_POKEMON_SHOW);
@@ -154,7 +154,7 @@ public class PokemonAction extends ActionBase {
      */
     public void edit() throws ServletException, IOException {
 
-        //idを条件に従業員データを取得する
+        //idを条件にポケモンデータを取得する
         PokemonView pv = service.findOne(toNumber(getRequestParam(AttributeConst.POKEMON_ID)));
 
         if (pv == null || pv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
@@ -165,7 +165,7 @@ public class PokemonAction extends ActionBase {
         }
 
         putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-        putRequestScope(AttributeConst.POKEMON, pv); //取得した従業員情報
+        putRequestScope(AttributeConst.POKEMON, pv); //取得したポケモン情報
 
         //編集画面を表示する
         forward(ForwardConst.FW_POKEMON_EDIT);
@@ -181,7 +181,7 @@ public class PokemonAction extends ActionBase {
 
         //CSRF対策 tokenのチェック
         if (checkToken()) {
-            //パラメータの値を元に従業員情報のインスタンスを作成する
+            //パラメータの値を元にポケモン情報のインスタンスを作成する
             PokemonView pv = new PokemonView(
                     toNumber(getRequestParam(AttributeConst.POKEMON_ID)),
                     getRequestParam(AttributeConst.POKEMON_CODE),
@@ -231,7 +231,7 @@ public class PokemonAction extends ActionBase {
         //CSRF対策 tokenのチェック
         if (checkToken()) {
 
-            //idを条件に従業員データを論理削除する
+            //idを条件にポケモンデータを論理削除する
             service.destroy(toNumber(getRequestParam(AttributeConst.POKEMON_ID)));
 
             //セッションに削除完了のフラッシュメッセージを設定
@@ -239,6 +239,68 @@ public class PokemonAction extends ActionBase {
 
             //一覧画面にリダイレクト
             redirect(ForwardConst.ACT_Pokemon, ForwardConst.CMD_INDEX);
+        }
+    }
+
+    /**
+     * 検索画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void showSearch() throws ServletException, IOException {
+
+        //CSRF対策用トークンを設定
+        putRequestScope(AttributeConst.TOKEN, getTokenId());
+
+        //セッションにフラッシュメッセージが登録されている場合はリクエストスコープに設定する
+        String flush = getSessionScope(AttributeConst.FLUSH);
+        if (flush != null) {
+            putRequestScope(AttributeConst.FLUSH,flush);
+            removeSessionScope(AttributeConst.FLUSH);
+        }
+
+        //検索画面を表示
+        forward(ForwardConst.FW_POKEMON_SEARCH);
+    }
+
+    /**
+     * 検索処理を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void search() throws ServletException, IOException {
+
+        String code = getRequestParam(AttributeConst.POKEMON_CODE);
+
+
+        //有効な図鑑番号か認証する
+        Boolean isValidPokemon = service.validateLogin(code);
+
+        if (isValidPokemon) {
+            //認証成功の場合
+
+            //CSRF対策 tokenのチェック
+            if (checkToken()) {
+
+                //検索したポケモンのDBデータを取得
+                PokemonView pv = service.findOne(code);
+                //セッションに検索したポケモンを設定
+                putSessionScope(AttributeConst.SEARCH_POKEMON, pv);
+                //育成論登録画面へリダイレクト
+                redirect(ForwardConst.ACT_REP, ForwardConst.CMD_NEW);
+            }
+        } else {
+            //認証失敗の場合
+
+            //CSRF対策用トークンを設定
+            putRequestScope(AttributeConst.TOKEN, getTokenId());
+            //認証失敗エラーメッセージ表示フラグをたてる
+            putRequestScope(AttributeConst.LOGIN_ERR, true);
+            //入力された従業員コードを設定
+            putRequestScope(AttributeConst.POKEMON_CODE, code);
+
+            //ログイン画面を表示
+            forward(ForwardConst.FW_POKEMON_SEARCH);
         }
     }
 }

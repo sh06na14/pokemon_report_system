@@ -22,6 +22,8 @@ public enum ForwardConst {
     CMD_EDIT("edit"),
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
+    CMD_SHOW_SEARCH("showSearch"),
+    CMD_SEARCH("search"),
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),
@@ -35,6 +37,7 @@ public enum ForwardConst {
     FW_POKEMON_SHOW("pokemons/show"),
     FW_POKEMON_NEW("pokemons/new"),
     FW_POKEMON_EDIT("pokemons/edit"),
+    FW_POKEMON_SEARCH("pokemons/search"),
     FW_REP_INDEX("reports/index"),
     FW_REP_SHOW("reports/show"),
     FW_REP_NEW("reports/new"),

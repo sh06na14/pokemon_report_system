@@ -14,6 +14,8 @@ public enum AttributeConst {
 
     //ログイン中の従業員
     LOGIN_PLAYER("login_player"),
+    //検索したポケモン
+    SEARCH_POKEMON("search_pokemon"),
 
     //ログイン画面
     LOGIN_ERR("loginError"),
@@ -59,7 +61,20 @@ public enum AttributeConst {
     REP_ID("id"),
     REP_DATE("report_date"),
     REP_TITLE("title"),
-    REP_CONTENT("content");
+    REP_ABILITY("ability"),
+    REP_NATURE("nature"),
+    REP_HP("hitPoints"),
+    REP_ATTACK("attack"),
+    REP_DEFENSE("defense"),
+    REP_SPECIAL_ATTACK("specialAttack"),
+    REP_SPECIAL_DEFENSE("specialDefense"),
+    REP_SPEED("speed"),
+    REP_MOVE_A("move1"),
+    REP_MOVE_B("move2"),
+    REP_MOVE_C("move3"),
+    REP_MOVE_D("move4"),
+    REP_HELDITEM("heldItem"),
+    REP_COMMENT("comment");
 
     private final String text;
     private final Integer i;
