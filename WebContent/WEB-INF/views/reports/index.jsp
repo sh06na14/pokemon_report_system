@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="constants.AttributeConst" %>
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
@@ -32,7 +33,16 @@
                         <td class="report_name"><c:out value="${report.player.name}" /></td>
                         <td class="report_date"><fmt:formatDate value='${reportDay}' pattern='yyyy-MM-dd' /></td>
                         <td class="report_title">${report.title}</td>
-                        <td class="report_action"><a href="<c:url value='?action=${actRep}&command=${commShow}&id=${report.id}' />">詳細を見る</a></td>
+                        <td>
+                        <c:choose>
+                                <c:when test="${report.deleteFlag == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()}">
+                                    （削除済み）
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="<c:url value='?action=${actRep}&command=${commShow}&id=${report.id}' />">詳細を見る</a>
+                                </c:otherwise>
+                        </c:choose>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>

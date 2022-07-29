@@ -148,5 +148,26 @@ public class ReportService extends ServiceBase {
 
     }
 
+    /**
+     * idを条件に育成論データを論理削除する
+     * @param id
+     */
+    public void destroy(Integer id) {
+
+        //idを条件に登録済みの育成論情報を取得する
+        ReportView savedRep = findOne(id);
+
+        //更新日時に現在時刻を設定する
+        LocalDateTime today = LocalDateTime.now();
+        savedRep.setUpdatedAt(today);
+
+        //論理削除フラグをたてる
+        savedRep.setDeleteFlag(JpaConst.Report_DEL_TRUE);
+
+        //更新処理を行う
+        updateInternal(savedRep);
+
+    }
+
 
 }

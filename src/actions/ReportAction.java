@@ -184,7 +184,7 @@ public class ReportAction extends ActionBase {
      */
     public void edit() throws ServletException, IOException {
 
-        //idを条件に日報データを取得する
+        //idを条件に育成論データを取得する
         ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
         //セッションからログイン中のプレイヤー情報を取得
@@ -198,7 +198,7 @@ public class ReportAction extends ActionBase {
         } else {
 
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-            putRequestScope(AttributeConst.REPORT, rv); //取得した日報データ
+            putRequestScope(AttributeConst.REPORT, rv); //取得した育成論データ
 
             //編集画面を表示
             forward(ForwardConst.FW_REP_EDIT);
@@ -260,5 +260,27 @@ public class ReportAction extends ActionBase {
 
             }
         }
+    }
+
+    /**
+     * 論理削除を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void destroy() throws ServletException, IOException {
+      //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+            //idを条件に従業員データを論理削除する
+            service.destroy(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+            //セッションに削除完了のフラッシュメッセージを設定
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETED.getMessage());
+
+            //一覧画面にリダイレクト
+            redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
+        }
+
+
     }
 }

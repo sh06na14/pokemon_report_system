@@ -83,7 +83,10 @@
                     <th>もちもの</th>
                     <td><pre><c:out value="${report.heldItem}" /></pre></td>
                 </tr>
-
+                <tr>
+                    <th>コメント</th>
+                    <td><pre><c:out value="${report.comment}" /></pre></td>
+                </tr>
                 <tr>
                     <th>登録日時</th>
                     <fmt:parseDate value="${report.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="createDay" type="date" />
