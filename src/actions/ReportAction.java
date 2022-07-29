@@ -70,7 +70,7 @@ public class ReportAction extends ActionBase {
 
         putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
 
-        //日報情報の空インスタンスに、日報の日付＝今日の日付を設定する
+        //育成論情報の空インスタンスに、日報の日付＝今日の日付を設定する
         ReportView rv = new ReportView();
         rv.setReportDate(LocalDate.now());
         putRequestScope(AttributeConst.REPORT, rv); //日付のみ設定済みの日報インスタンス
@@ -90,7 +90,7 @@ public class ReportAction extends ActionBase {
         //CSRF対策 tokenのチェック
         if (checkToken()) {
 
-            //日報の日付が入力されていなければ、今日の日付を設定
+            //育成論の日付が入力されていなければ、今日の日付を設定
             LocalDate day = null;
             if (getRequestParam(AttributeConst.REP_DATE) == null
                     || getRequestParam(AttributeConst.REP_DATE).equals("")) {
@@ -104,7 +104,7 @@ public class ReportAction extends ActionBase {
           //セッションから検索したポケモン情報を取得
             PokemonView pokemonView = (PokemonView) getSessionScope(AttributeConst.SEARCH_POKEMON);
 
-            //パラメータの値をもとに日報情報のインスタンスを作成する
+            //パラメータの値をもとに育成論情報のインスタンスを作成する
             ReportView rv = new ReportView(
                     null,
                     playerView, //ログインしているプレイヤーを、作成者として登録する
@@ -129,7 +129,7 @@ public class ReportAction extends ActionBase {
                     null,
                     AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
 
-            //日報情報登録
+            //育成論情報登録
             List<String> errors = service.create(rv);
 
             if (errors.size() > 0) {
@@ -161,11 +161,11 @@ public class ReportAction extends ActionBase {
      */
     public void show() throws ServletException, IOException {
 
-        //idを条件に日報データを取得する
+        //idを条件に育成論データを取得する
         ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
         if (rv == null) {
-            //該当の日報データが存在しない場合はエラー画面を表示
+            //該当の育成論データが存在しない場合はエラー画面を表示
             forward(ForwardConst.FW_ERR_UNKNOWN);
 
         } else {
@@ -175,5 +175,34 @@ public class ReportAction extends ActionBase {
             //詳細画面を表示
             forward(ForwardConst.FW_REP_SHOW);
         }
+    }
+
+    /**
+     * 編集画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void edit() throws ServletException, IOException {
+
+        //idを条件に日報データを取得する
+        ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+        //セッションからログイン中のプレイヤー情報を取得
+        PlayerView pv = (PlayerView) getSessionScope(AttributeConst.LOGIN_PLAYER);
+
+        if (rv == null || pv.getId() != rv.getPlayer().getId()) {
+            //該当の育成論データが存在しない、または
+            //ログインしているプレイヤーが育成論の作成者でない場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+
+        } else {
+
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+            putRequestScope(AttributeConst.REPORT, rv); //取得した日報データ
+
+            //編集画面を表示
+            forward(ForwardConst.FW_REP_EDIT);
+        }
+
     }
 }
