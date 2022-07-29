@@ -22,7 +22,14 @@
 <br /><br />
 
 <label>ポケモン名</label><br />
-<c:out value="${sessionScope.search_pokemon.name}" />
+<c:choose>
+    <c:when test="${report.pokemon.name == null}">
+        <c:out value="${sessionScope.search_pokemon.name}" />
+    </c:when>
+    <c:otherwise>
+        <c:out value="${report.pokemon.name}" />
+    </c:otherwise>
+</c:choose>
 <br /><br />
 
 <label for="${AttributeConst.REP_TITLE.getValue()}">タイトル</label><br />

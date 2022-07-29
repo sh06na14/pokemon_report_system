@@ -205,4 +205,60 @@ public class ReportAction extends ActionBase {
         }
 
     }
+
+    /**
+     * 更新を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void update() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+            //idを条件に育成論データを取得する
+            ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+            //入力された育成論内容を設定する
+            rv.setReportDate(toLocalDate(getRequestParam(AttributeConst.REP_DATE)));
+            rv.setTitle(getRequestParam(AttributeConst.REP_TITLE));
+            rv.setAbility(getRequestParam(AttributeConst.REP_ABILITY));
+            rv.setNature(getRequestParam(AttributeConst.REP_NATURE));
+            rv.setHitPoints(toNumber(getRequestParam(AttributeConst.REP_HP)));
+            rv.setAttack(toNumber(getRequestParam(AttributeConst.REP_ATTACK)));
+            rv.setDefense(toNumber(getRequestParam(AttributeConst.REP_DEFENSE)));
+            rv.setSpecialAttack(toNumber(getRequestParam(AttributeConst.REP_SPECIAL_ATTACK)));
+            rv.setSpecialDefense(toNumber(getRequestParam(AttributeConst.REP_SPECIAL_DEFENSE)));
+            rv.setSpeed(toNumber(getRequestParam(AttributeConst.REP_SPEED)));
+            rv.setMove1(getRequestParam(AttributeConst.REP_MOVE_A));
+            rv.setMove2(getRequestParam(AttributeConst.REP_MOVE_B));
+            rv.setMove3(getRequestParam(AttributeConst.REP_MOVE_C));
+            rv.setMove4(getRequestParam(AttributeConst.REP_MOVE_D));
+            rv.setHeldItem(getRequestParam(AttributeConst.REP_HELDITEM));
+            rv.setComment(getRequestParam(AttributeConst.REP_COMMENT));
+
+            //日報データを更新する
+            List<String> errors = service.update(rv);
+
+            if (errors.size() > 0) {
+                //更新中にエラーが発生した場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.REPORT, rv); //入力された育成論情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //編集画面を再表示
+                forward(ForwardConst.FW_REP_EDIT);
+            } else {
+                //更新中にエラーがなかった場合
+
+                //セッションに更新完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
+
+            }
+        }
+    }
 }
