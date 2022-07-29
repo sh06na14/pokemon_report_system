@@ -30,10 +30,10 @@ import lombok.Setter;
             query = "SELECT COUNT(r) FROM Report AS r"),
     @NamedQuery(
             name = "report.getAllMine",
-            query = "SELECT r FROM Report AS r WHERE r.deleteFlag = 0 AND r.player = :player ORDER BY r.id DESC"),
+            query = "SELECT r FROM Report AS r WHERE r.player = :player ORDER BY r.id DESC"),
     @NamedQuery(
             name = "report.countAllMine",
-            query = "SELECT COUNT(r) FROM Report AS r WHERE r.deleteFlag = 0 AND r.player = :player")
+            query = "SELECT COUNT(r) FROM Report AS r WHERE r.player = :player")
 })
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
