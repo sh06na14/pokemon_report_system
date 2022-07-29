@@ -45,7 +45,7 @@ public class PokemonService extends ServiceBase {
         Pokemon p = null;
         try {
 
-            //社員番号とハッシュ化済パスワードを条件に未削除の従業員を1件取得する
+            //図鑑番号を条件に未削除のポケモンを1件取得する
             p = em.createNamedQuery("pokemon.getByCode", Pokemon.class)
                     .setParameter(JpaConst.JPQL_PARM_CODE, code)
                     .getSingleResult();
@@ -74,7 +74,7 @@ public class PokemonService extends ServiceBase {
      */
     public long countByCode(String code) {
 
-        //指定した社員番号を保持する従業員の件数を取得する
+        //指定した図鑑番号を保持するポケモンの件数を取得する
         long pokemons_count = (long) em.createNamedQuery("pokemon.countRegisteredByCode", Long.class)
                 .setParameter(JpaConst.JPQL_PARM_CODE, code)
                 .getSingleResult();
@@ -103,21 +103,21 @@ public class PokemonService extends ServiceBase {
 
     /**
      * 画面から入力されたポケモンの更新内容を元にデータを1件作成し、ポケモンテーブルを更新する
-     * @param ev 画面から入力された従業員の登録内容
+     * @param pv 画面から入力されたポケモンの登録内容
      * @return バリデーションや更新処理中に発生したエラーのリスト
      */
     public List<String> update(PokemonView pv) {
 
-        //idを条件に登録済みの従業員情報を取得する
+        //idを条件に登録済みのポケモン情報を取得する
         PokemonView savedPokemon = findOne(pv.getId());
 
         boolean validateCode = false;
         if (!savedPokemon.getCode().equals(pv.getCode())) {
-            //社員番号を更新する場合
+            //図鑑番号を更新する場合
 
-            //社員番号についてのバリデーションを行う
+            //図鑑番号についてのバリデーションを行う
             validateCode = true;
-            //変更後の社員番号を設定する
+            //変更後の図鑑番号を設定する
             savedPokemon.setCode(pv.getCode());
         }
 
@@ -149,7 +149,7 @@ public class PokemonService extends ServiceBase {
      */
     public void destroy(Integer id) {
 
-        //idを条件に登録済みの従業員情報を取得する
+        //idを条件に登録済みのポケモン情報を取得する
         PokemonView savedPokemon = findOne(id);
 
         //論理削除フラグをたてる
@@ -162,7 +162,7 @@ public class PokemonService extends ServiceBase {
 
     /**
      * 図鑑番号を条件に検索し、データが取得できるかどうかで認証結果を返却する
-     * @param code 社員番号
+     * @param code 図鑑番号
      * @return 認証結果を返却す(成功:true 失敗:false)
      */
     public Boolean validateLogin(String code) {

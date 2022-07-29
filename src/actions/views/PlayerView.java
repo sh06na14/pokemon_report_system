@@ -18,7 +18,7 @@ public class PlayerView {
     private Integer id;
 
     /**
-     * 社員番号
+     * プレイヤー番号
      */
     private String code;
 

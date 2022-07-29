@@ -45,7 +45,7 @@ public class PlayerValidator {
      * プレイヤー番号の入力チェックを行い、エラーメッセージを返却
      * @param service EmployeeServiceのインスタンス
      * @param code プレイヤー番号
-     * @param codeDuplicateCheckFlag 社員番号の重複チェックを実施するかどうか(実施する:true 実施しない:false)
+     * @param codeDuplicateCheckFlag プレイヤー番号の重複チェックを実施するかどうか(実施する:true 実施しない:false)
      * @return エラーメッセージ
      */
     private static String validateCode(PlayerService service, String code, Boolean codeDuplicateCheckFlag) {
@@ -72,8 +72,8 @@ public class PlayerValidator {
 
     /**
      * @param service EmployeeServiceのインスタンス
-     * @param code 社員番号
-     * @return Playerテーブルに登録されている同一社員番号のデータの件数
+     * @param code プレイヤー番号
+     * @return Playerテーブルに登録されている同一プレイヤー番号のデータの件数
      */
     private static long isDuplicatePlayer(PlayerService service, String code) {
 

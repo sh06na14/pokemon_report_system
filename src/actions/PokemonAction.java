@@ -131,7 +131,7 @@ public class PokemonAction extends ActionBase {
      */
     public void show() throws ServletException, IOException {
 
-        //idを条件に従業員データを取得する
+        //idを条件にポケモンデータを取得する
         PokemonView pv = service.findOne(toNumber(getRequestParam(AttributeConst.POKEMON_ID)));
 
         int sum = pv.getHitPoints() + pv.getAttack() + pv.getDefense() + pv.getSpecialAttack() + pv.getSpecialDefense() + pv.getSpeed();
@@ -200,7 +200,7 @@ public class PokemonAction extends ActionBase {
                     AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
 
 
-            //従業員情報更新
+            //ポケモン情報更新
             List<String> errors = service.update(pv);
 
             if (errors.size() > 0) {

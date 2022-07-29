@@ -90,7 +90,7 @@ public class PlayerService extends ServiceBase {
 
     /**
      * 画面から入力されたPlayerの登録内容を元にデータを1件作成し、Playerテーブルに登録する
-     * @param ev 画面から入力された従業員の登録内容
+     * @param pv 画面から入力されたプレイヤーの登録内容
      * @param pepper pepper文字列
      * @return バリデーションや登録処理中に発生したエラーのリスト
      */
@@ -119,22 +119,22 @@ public class PlayerService extends ServiceBase {
 
     /**
      * 画面から入力されたPlayerの更新内容を元にデータを1件作成し、Playerテーブルを更新する
-     * @param ev 画面から入力された従業員の登録内容
+     * @param pv 画面から入力されたプレイヤーの登録内容
      * @param pepper pepper文字列
      * @return バリデーションや更新処理中に発生したエラーのリスト
      */
     public List<String> update(PlayerView pv, String pepper) {
 
-        //idを条件に登録済みの従業員情報を取得する
+        //idを条件に登録済みのプレイヤー情報を取得する
         PlayerView savedPlayer = findOne(pv.getId());
 
         boolean validateCode = false;
         if (!savedPlayer.getCode().equals(pv.getCode())) {
-            //社員番号を更新する場合
+            //プレイヤー番号を更新する場合
 
-            //社員番号についてのバリデーションを行う
+            //プレイヤー番号についてのバリデーションを行う
             validateCode = true;
-            //変更後の社員番号を設定する
+            //変更後のプレイヤー番号を設定する
             savedPlayer.setCode(pv.getCode());
         }
 
@@ -170,12 +170,12 @@ public class PlayerService extends ServiceBase {
     }
 
     /**
-     * idを条件に従業員データを論理削除する
+     * idを条件にプレイヤーデータを論理削除する
      * @param id
      */
     public void destroy(Integer id) {
 
-        //idを条件に登録済みの従業員情報を取得する
+        //idを条件に登録済みのプレイヤー情報を取得する
         PlayerView savedPlayer = findOne(id);
 
         //更新日時に現在時刻を設定する
@@ -226,8 +226,8 @@ public class PlayerService extends ServiceBase {
     }
 
     /**
-     * 従業員データを1件登録する
-     * @param ev 従業員データ
+     * プレイヤーデータを1件登録する
+     * @param pv プレイヤーデータ
      * @return 登録結果(成功:true 失敗:false)
      */
     private void create(PlayerView pv) {
@@ -239,8 +239,8 @@ public class PlayerService extends ServiceBase {
     }
 
     /**
-     * 従業員データを更新する
-     * @param ev 画面から入力された従業員の登録内容
+     * プレイヤーデータを更新する
+     * @param pv 画面から入力されたプレイヤーの登録内容
      */
     private void update(PlayerView pv) {
 

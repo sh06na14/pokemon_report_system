@@ -100,7 +100,7 @@ public class PlayerAction extends ActionBase {
             //アプリケーションスコープからpepper文字列を取得
             String pepper = getContextScope(PropertyConst.PEPPER);
 
-            //従業員情報登録
+            //プレイヤー情報登録
             List<String> errors = service.create(pv, pepper);
 
             if (errors.size() > 0) {
@@ -205,7 +205,7 @@ public class PlayerAction extends ActionBase {
                 //アプリケーションスコープからpepper文字列を取得
                 String pepper = getContextScope(PropertyConst.PEPPER);
 
-                //従業員情報更新
+                //プレイヤー情報更新
                 List<String> errors = service.update(pv, pepper);
 
                 if (errors.size() > 0) {

@@ -12,7 +12,7 @@ public enum AttributeConst {
     TOKEN("_token"),
     ERR("errors"),
 
-    //ログイン中の従業員
+    //ログイン中のプレイヤー
     LOGIN_PLAYER("login_player"),
     //検索したポケモン
     SEARCH_POKEMON("search_pokemon"),
@@ -20,7 +20,7 @@ public enum AttributeConst {
     //ログイン画面
     LOGIN_ERR("loginError"),
 
-    //従業員管理
+    //プレイヤー管理
     PLAYER("player"),
     PLAYERS("players"),
     PLAYER_COUNT("players_count"),

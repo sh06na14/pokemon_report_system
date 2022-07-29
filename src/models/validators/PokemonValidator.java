@@ -32,7 +32,7 @@ public class PokemonValidator {
             errors.add(nameError);
         }
 
-      //名前のチェック
+        //タイプのチェック
         String typeError = validateType1(pv.getType1());
         if (!typeError.equals("")) {
             errors.add(typeError);
@@ -97,8 +97,7 @@ public class PokemonValidator {
     }
 
     /**
-     * 氏名に入力値があるかをチェックし、入力値がなければエラーメッセージを返却
-     * @param name 氏名
+     * タイプ１に入力値があるかをチェックし、入力値がなければエラーメッセージを返却
      * @return エラーメッセージ
      */
     private static String validateType1(String type1) {

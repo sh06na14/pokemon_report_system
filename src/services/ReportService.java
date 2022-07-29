@@ -125,7 +125,7 @@ public class ReportService extends ServiceBase {
 
     /**
      * 育成論データを1件登録する
-     * @param rv 日報データ
+     * @param rv 育成論データ
      */
     private void createInternal(ReportView rv) {
 
