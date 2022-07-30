@@ -3,6 +3,7 @@ package actions;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.ServletException;
 
@@ -154,6 +155,8 @@ public class ReportAction extends ActionBase {
         }
     }
 
+
+
     /**
      * 詳細画面を表示する
      * @throws ServletException
@@ -170,11 +173,78 @@ public class ReportAction extends ActionBase {
 
         } else {
 
-            putRequestScope(AttributeConst.REPORT, rv); //取得した日報データ
+            putRequestScope(AttributeConst.REPORT, rv); //取得した育成論データ
+            int hitPoints = calculateHP(rv.getPokemon().getHitPoints(), rv.getHitPoints());
+            request.setAttribute("hitPoints", hitPoints);
+            int attack = calculateAttack(rv.getNature(), rv.getPokemon().getAttack(), rv.getAttack());
+            request.setAttribute("attack", attack);
+            int defense = calculateDefense(rv.getNature(), rv.getPokemon().getDefense(), rv.getDefense());
+            request.setAttribute("defense", defense);
+            int specialAttack = calculateSpecialAttack(rv.getNature(), rv.getPokemon().getSpecialAttack(), rv.getSpecialAttack());
+            request.setAttribute("specialAttack", specialAttack);
+            int specialDefense = calculateSpecialDefense(rv.getNature(), rv.getPokemon().getSpecialDefense(), rv.getSpecialDefense());
+            request.setAttribute("specialDefense", specialDefense);
+            int speed = calculateSpeed(rv.getNature(),rv.getPokemon().getSpeed(), rv.getSpeed());
+            request.setAttribute("speed", speed);
 
             //詳細画面を表示
             forward(ForwardConst.FW_REP_SHOW);
         }
+    }
+
+    public static int calculateHP(int baseStatsHP, int effortValueHP) {
+        int hitPoints = (baseStatsHP * 2 + 31 + effortValueHP / 4) * 50 / 100 + 50 + 10;
+        return hitPoints;
+    }
+
+    public static int calculateAttack(String nature, int baseStatsAttack, int effortValueAttack) {
+        int attack = (baseStatsAttack * 2 + 31 + effortValueAttack / 4) * 50 /100 + 5;
+        if (Objects.equals(nature, "いじっぱり") || Objects.equals(nature, "ゆうかん")|| Objects.equals(nature, "さみしがり")|| Objects.equals(nature, "やんちゃ")) {
+            attack = attack * 11 / 10;
+        }else if (Objects.equals(nature, "ひかえめ")|| Objects.equals(nature, "おくびょう")|| Objects.equals(nature, "ずぶとい")|| Objects.equals(nature, "おだやか")) {
+            attack = attack * 9 /10;
+        }
+        return attack;
+    }
+
+    public static int calculateDefense(String nature, int baseStatsDefense, int effortValueDefense) {
+        int defense = (baseStatsDefense * 2 + 31 + effortValueDefense / 4) * 50 /100 + 5;
+        if (Objects.equals(nature, "ずぶとい") || Objects.equals(nature, "わんぱく")|| Objects.equals(nature, "のうてんき")|| Objects.equals(nature, "のんき")) {
+            defense = defense * 11 / 10;
+        }else if (Objects.equals(nature, "さみしがり")|| Objects.equals(nature, "おっとり")|| Objects.equals(nature, "おとなしい")|| Objects.equals(nature, "せっかち")) {
+            defense = defense * 9 /10;
+        }
+        return defense;
+    }
+
+    public static int calculateSpecialAttack(String nature, int baseStatsSpecialAttack, int effortValueSpecialAttack) {
+        int specialAttack = (baseStatsSpecialAttack * 2 + 31 + effortValueSpecialAttack / 4) * 50 /100 + 5;
+        if (Objects.equals(nature, "ひかえめ") || Objects.equals(nature, "おっとり")|| Objects.equals(nature, "うっかりや")|| Objects.equals(nature, "れいせい")) {
+            specialAttack = specialAttack * 11 / 10;
+        }else if (Objects.equals(nature, "いじっぱり")|| Objects.equals(nature, "わんぱく")|| Objects.equals(nature, "しんちょう")|| Objects.equals(nature, "ようき")) {
+            specialAttack = specialAttack * 9 /10;
+        }
+        return specialAttack;
+    }
+
+    public static int calculateSpecialDefense(String nature, int baseStatsSpecialDefense, int effortValueSpecialDefense) {
+        int specialDefense = (baseStatsSpecialDefense * 2 + 31 + effortValueSpecialDefense / 4) * 50 /100 + 5;
+        if (Objects.equals(nature, "おだやか") || Objects.equals(nature, "おとなしい")|| Objects.equals(nature, "しんちょう")|| Objects.equals(nature, "なまいき")) {
+            specialDefense = specialDefense * 11 / 10;
+        }else if (Objects.equals(nature, "やんちゃ")|| Objects.equals(nature, "のうてんき")|| Objects.equals(nature, "うっかりや")|| Objects.equals(nature, "むじゃき")) {
+            specialDefense = specialDefense * 9 /10;
+        }
+        return specialDefense;
+    }
+
+    public static int calculateSpeed(String nature, int baseStatsSpeed, int effortValueSpeed) {
+        int speed = (baseStatsSpeed * 2 + 31 + effortValueSpeed / 4) * 50 /100 + 5;
+        if (Objects.equals(nature, "おくびょう") || Objects.equals(nature, "せっかち")|| Objects.equals(nature, "ようき")|| Objects.equals(nature, "むじゃき")) {
+            speed = speed * 11 / 10;
+        }else if (Objects.equals(nature, "ゆうかん")|| Objects.equals(nature, "のんき")|| Objects.equals(nature, "れいせい")|| Objects.equals(nature, "なまいき")) {
+            speed = ((baseStatsSpeed * 2 + effortValueSpeed / 4) * 50 /100 + 5) * 9 /10;
+        }
+        return speed;
     }
 
     /**

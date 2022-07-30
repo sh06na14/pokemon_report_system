@@ -40,30 +40,6 @@
                     <td><pre><c:out value="${report.nature}" /></pre></td>
                 </tr>
                 <tr>
-                    <th>基礎ポイント(HP)</th>
-                    <td><pre><c:out value="${report.hitPoints}" /></pre></td>
-                </tr>
-                <tr>
-                    <th>基礎ポイント(こうげき)</th>
-                    <td><pre><c:out value="${report.attack}" /></pre></td>
-                </tr>
-                <tr>
-                    <th>基礎ポイント(ぼうぎょ)</th>
-                    <td><pre><c:out value="${report.defense}" /></pre></td>
-                </tr>
-                <tr>
-                    <th>基礎ポイント(とくこう)</th>
-                    <td><pre><c:out value="${report.specialAttack}" /></pre></td>
-                </tr>
-                <tr>
-                    <th>基礎ポイント(とくぼう)</th>
-                    <td><pre><c:out value="${report.specialDefense}" /></pre></td>
-                </tr>
-                <tr>
-                    <th>基礎ポイント(すばやさ)</th>
-                    <td><pre><c:out value="${report.speed}" /></pre></td>
-                </tr>
-                <tr>
                     <th>わざ１</th>
                     <td><pre><c:out value="${report.move1}" /></pre></td>
                 </tr>
@@ -83,6 +59,58 @@
                     <th>もちもの</th>
                     <td><pre><c:out value="${report.heldItem}" /></pre></td>
                 </tr>
+            </tbody>
+        </table>
+
+        <table>
+            <tbody>
+                <tr>
+                    <th></th>
+                    <th>種族値</th>
+                    <th>基礎ポイント</th>
+                    <th>ステータス(LV50)</th>
+                </tr>
+                <tr>
+                    <th>HP</th>
+                    <td><pre><c:out value="${report.pokemon.hitPoints}" /></pre></td>
+                    <td><pre><c:out value="${report.hitPoints}" /></pre></td>
+                    <td><pre><c:out value="${hitPoints}" /></pre></td>
+                </tr>
+                <tr>
+                    <th>こうげき</th>
+                    <td><pre><c:out value="${report.pokemon.attack}" /></pre></td>
+                    <td><pre><c:out value="${report.attack}" /></pre></td>
+                    <td><pre><c:out value="${attack}" /></pre></td>
+                </tr>
+                <tr>
+                    <th>ぼうぎょ</th>
+                    <td><pre><c:out value="${report.pokemon.defense}" /></pre></td>
+                    <td><pre><c:out value="${report.defense}" /></pre></td>
+                    <td><pre><c:out value="${defense}" /></pre></td>
+                </tr>
+                <tr>
+                    <th>とくこう</th>
+                    <td><pre><c:out value="${report.pokemon.specialAttack}" /></pre></td>
+                    <td><pre><c:out value="${report.specialAttack}" /></pre></td>
+                    <td><pre><c:out value="${specialAttack}" /></pre></td>
+                </tr>
+                <tr>
+                    <th>とくぼう</th>
+                    <td><pre><c:out value="${report.pokemon.specialDefense}" /></pre></td>
+                    <td><pre><c:out value="${report.specialDefense}" /></pre></td>
+                    <td><pre><c:out value="${specialDefense}" /></pre></td>
+                </tr>
+                <tr>
+                    <th>すばやさ</th>
+                    <td><pre><c:out value="${report.pokemon.speed}" /></pre></td>
+                    <td><pre><c:out value="${report.speed}" /></pre></td>
+                    <td><pre><c:out value="${speed}" /></pre></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table>
+            <tbody>
                 <tr>
                     <th>コメント</th>
                     <td><pre><c:out value="${report.comment}" /></pre></td>
