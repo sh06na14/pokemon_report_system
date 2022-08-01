@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import actions.views.PlayerView;
 import actions.views.PokemonView;
 import constants.AttributeConst;
 import constants.ForwardConst;
@@ -36,27 +37,32 @@ public class PokemonAction extends ActionBase {
      */
     public void index() throws ServletException, IOException {
 
-        //指定されたページ数の一覧画面に表示するデータを取得
-        int page = getPage();
-        List<PokemonView> pokemons = service.getPerPage(page);
+      //管理者かどうかのチェック //追記
+        if (checkAdmin()) { //追記
 
-        //全てのポケモンデータの件数を取得
-        long pokemonCount = service.countAll();
 
-        putRequestScope(AttributeConst.POKEMONS, pokemons); //取得したポケモンデータ
-        putRequestScope(AttributeConst.POKEMON_COUNT, pokemonCount); //全てのポケモンデータの件数
-        putRequestScope(AttributeConst.PAGE, page); //ページ数
-        putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+            //指定されたページ数の一覧画面に表示するデータを取得
+            int page = getPage();
+            List<PokemonView> pokemons = service.getPerPage(page);
 
-        //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
-        String flush = getSessionScope(AttributeConst.FLUSH);
-        if (flush != null) {
-            putRequestScope(AttributeConst.FLUSH, flush);
-            removeSessionScope(AttributeConst.FLUSH);
-        }
+            //全てのポケモンデータの件数を取得
+            long pokemonCount = service.countAll();
+
+            putRequestScope(AttributeConst.POKEMONS, pokemons); //取得したポケモンデータ
+            putRequestScope(AttributeConst.POKEMON_COUNT, pokemonCount); //全てのポケモンデータの件数
+            putRequestScope(AttributeConst.PAGE, page); //ページ数
+            putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+
+            //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
+            String flush = getSessionScope(AttributeConst.FLUSH);
+            if (flush != null) {
+                putRequestScope(AttributeConst.FLUSH, flush);
+                removeSessionScope(AttributeConst.FLUSH);
+            }
 
         //一覧画面を表示
         forward(ForwardConst.FW_POKEMON_INDEX);
+        }
 
     }
 
@@ -66,12 +72,15 @@ public class PokemonAction extends ActionBase {
      * @throws IOException
      */
     public void entryNew() throws ServletException, IOException {
+      //管理者かどうかのチェック //追記
+        if (checkAdmin()) { //追記
 
-        putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-        putRequestScope(AttributeConst.POKEMON, new PokemonView()); //空のポケモンインスタンス
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+            putRequestScope(AttributeConst.POKEMON, new PokemonView()); //空のポケモンインスタンス
 
-        //新規登録画面を表示
-        forward(ForwardConst.FW_POKEMON_NEW);
+            //新規登録画面を表示
+            forward(ForwardConst.FW_POKEMON_NEW);
+        }
     }
 
     /**
@@ -82,7 +91,7 @@ public class PokemonAction extends ActionBase {
     public void create() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック
-        if (checkToken()) {
+        if (checkAdmin() && checkToken()) {
 
             //パラメータの値を元にポケモン情報のインスタンスを作成する
             PokemonView pv = new PokemonView(
@@ -99,14 +108,14 @@ public class PokemonAction extends ActionBase {
                     toNumber(getRequestParam(AttributeConst.POKEMON_SPEED)),
                     AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
 
-            //従業員情報登録
+            //ポケモン情報登録
             List<String> errors = service.create(pv);
 
             if (errors.size() > 0) {
                 //登録中にエラーがあった場合
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-                putRequestScope(AttributeConst.POKEMON, pv); //入力された従業員情報
+                putRequestScope(AttributeConst.POKEMON, pv); //入力されたポケモン情報
                 putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
 
                 //新規登録画面を再表示
@@ -131,22 +140,26 @@ public class PokemonAction extends ActionBase {
      */
     public void show() throws ServletException, IOException {
 
-        //idを条件にポケモンデータを取得する
-        PokemonView pv = service.findOne(toNumber(getRequestParam(AttributeConst.POKEMON_ID)));
+      //管理者かどうかのチェック //追記
+        if (checkAdmin()) { //追記
 
-        int sum = pv.getHitPoints() + pv.getAttack() + pv.getDefense() + pv.getSpecialAttack() + pv.getSpecialDefense() + pv.getSpeed();
+            //idを条件にポケモンデータを取得する
+            PokemonView pv = service.findOne(toNumber(getRequestParam(AttributeConst.POKEMON_ID)));
 
-        if (pv == null || pv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+            int sum = pv.getHitPoints() + pv.getAttack() + pv.getDefense() + pv.getSpecialAttack() + pv.getSpecialDefense() + pv.getSpeed();
 
-            //データが取得できなかった、または論理削除されている場合はエラー画面を表示
-            forward(ForwardConst.FW_ERR_UNKNOWN);
-            return;
+            if (pv == null || pv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+
+                //データが取得できなかった、または論理削除されている場合はエラー画面を表示
+                forward(ForwardConst.FW_ERR_UNKNOWN);
+                return;
+            }
+
+            putRequestScope(AttributeConst.POKEMON, pv); //取得したポケモン情報
+            request.setAttribute("sum", sum);
+            //詳細画面を表示
+            forward(ForwardConst.FW_POKEMON_SHOW);
         }
-
-        putRequestScope(AttributeConst.POKEMON, pv); //取得したポケモン情報
-        request.setAttribute("sum", sum);
-        //詳細画面を表示
-        forward(ForwardConst.FW_POKEMON_SHOW);
 
     }
 
@@ -157,21 +170,25 @@ public class PokemonAction extends ActionBase {
      */
     public void edit() throws ServletException, IOException {
 
-        //idを条件にポケモンデータを取得する
-        PokemonView pv = service.findOne(toNumber(getRequestParam(AttributeConst.POKEMON_ID)));
+      //管理者かどうかのチェック //追記
+        if (checkAdmin()) { //追記
 
-        if (pv == null || pv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+            //idを条件にポケモンデータを取得する
+            PokemonView pv = service.findOne(toNumber(getRequestParam(AttributeConst.POKEMON_ID)));
 
-            //データが取得できなかった、または論理削除されている場合はエラー画面を表示
-            forward(ForwardConst.FW_ERR_UNKNOWN);
-            return;
+            if (pv == null || pv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+
+                //データが取得できなかった、または論理削除されている場合はエラー画面を表示
+                forward(ForwardConst.FW_ERR_UNKNOWN);
+                return;
+            }
+
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+            putRequestScope(AttributeConst.POKEMON, pv); //取得したポケモン情報
+
+            //編集画面を表示する
+            forward(ForwardConst.FW_POKEMON_EDIT);
         }
-
-        putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-        putRequestScope(AttributeConst.POKEMON, pv); //取得したポケモン情報
-
-        //編集画面を表示する
-        forward(ForwardConst.FW_POKEMON_EDIT);
 
     }
 
@@ -183,7 +200,7 @@ public class PokemonAction extends ActionBase {
     public void update() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック
-        if (checkToken()) {
+        if (checkAdmin() && checkToken()) {
             //パラメータの値を元にポケモン情報のインスタンスを作成する
             PokemonView pv = new PokemonView(
                     toNumber(getRequestParam(AttributeConst.POKEMON_ID)),
@@ -232,7 +249,7 @@ public class PokemonAction extends ActionBase {
     public void destroy() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック
-        if (checkToken()) {
+        if (checkAdmin() && checkToken()) {
 
             //idを条件にポケモンデータを論理削除する
             service.destroy(toNumber(getRequestParam(AttributeConst.POKEMON_ID)));
@@ -299,11 +316,36 @@ public class PokemonAction extends ActionBase {
             putRequestScope(AttributeConst.TOKEN, getTokenId());
             //認証失敗エラーメッセージ表示フラグをたてる
             putRequestScope(AttributeConst.LOGIN_ERR, true);
-            //入力された従業員コードを設定
+            //入力されたポケモンコードを設定
             putRequestScope(AttributeConst.POKEMON_CODE, code);
 
             //ログイン画面を表示
             forward(ForwardConst.FW_POKEMON_SEARCH);
         }
     }
+
+    /**
+     * ログイン中のプレイヤーが管理者かどうかチェックし、管理者でなければエラー画面を表示
+     * true: 管理者 false: 管理者ではない
+     * @throws ServletException
+     * @throws IOException
+     */
+    private boolean checkAdmin() throws ServletException, IOException {
+
+        //セッションからログイン中のプレイヤー情報を取得
+        PlayerView ev = (PlayerView) getSessionScope(AttributeConst.LOGIN_PLAYER);
+
+        //管理者でなければエラー画面を表示
+        if (ev.getAdminFlag() != AttributeConst.ROLE_ADMIN.getIntegerValue()) {
+
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return false;
+
+        } else {
+
+            return true;
+        }
+
+    }
+
 }
