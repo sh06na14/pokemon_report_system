@@ -41,7 +41,7 @@ public class TopAction extends ActionBase {
         int page = getPage();
         List<ReportView> reports = service.getMinePerPage(loginPlayer, page);
 
-        //ログイン中の従業員が作成した日報データの件数を取得
+        //ログイン中のプレイヤーが作成した育成論データの件数を取得
         long myReportsCount = service.countAllMine(loginPlayer);
 
         putRequestScope(AttributeConst.REPORTS, reports); //取得した育成論データ

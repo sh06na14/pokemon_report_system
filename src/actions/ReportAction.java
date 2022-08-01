@@ -43,11 +43,11 @@ public class ReportAction extends ActionBase {
         int page = getPage();
         List<ReportView> reports = service.getAllPerPage(page);
 
-        //全日報データの件数を取得
+        //全育成論データの件数を取得
         long reportsCount = service.countAll();
 
-        putRequestScope(AttributeConst.REPORTS, reports); //取得した日報データ
-        putRequestScope(AttributeConst.REP_COUNT, reportsCount); //全ての日報データの件数
+        putRequestScope(AttributeConst.REPORTS, reports); //取得した育成論データ
+        putRequestScope(AttributeConst.REP_COUNT, reportsCount); //全ての育成論データの件数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
@@ -137,7 +137,7 @@ public class ReportAction extends ActionBase {
                 //登録中にエラーがあった場合
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-                putRequestScope(AttributeConst.REPORT, rv);//入力された日報情報
+                putRequestScope(AttributeConst.REPORT, rv);//入力された育成論情報
                 putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
 
                 //新規登録画面を再表示
@@ -307,7 +307,7 @@ public class ReportAction extends ActionBase {
             rv.setHeldItem(getRequestParam(AttributeConst.REP_HELDITEM));
             rv.setComment(getRequestParam(AttributeConst.REP_COMMENT));
 
-            //日報データを更新する
+            //育成論データを更新する
             List<String> errors = service.update(rv);
 
             if (errors.size() > 0) {
@@ -341,7 +341,7 @@ public class ReportAction extends ActionBase {
       //CSRF対策 tokenのチェック
         if (checkToken()) {
 
-            //idを条件に従業員データを論理削除する
+            //idを条件にポケモンデータを論理削除する
             service.destroy(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
             //セッションに削除完了のフラッシュメッセージを設定

@@ -60,7 +60,7 @@ public class PlayerValidator {
 
             long employeesCount = isDuplicatePlayer(service, code);
 
-            //同一社員番号が既に登録されている場合はエラーメッセージを返却
+            //同一プレイヤー番号が既に登録されている場合はエラーメッセージを返却
             if (employeesCount > 0) {
                 return MessageConst.E_PLAYER_CODE_EXIST.getMessage();
             }

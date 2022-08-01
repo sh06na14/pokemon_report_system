@@ -56,7 +56,7 @@ public class LoginFilter implements Filter {
             String action = request.getParameter(ForwardConst.ACT.getValue());
             String command = request.getParameter(ForwardConst.CMD.getValue());
 
-            //セッションからログインしている従業員の情報を取得
+            //セッションからログインしているプレイヤーの情報を取得
             PlayerView pv = (PlayerView) session.getAttribute(AttributeConst.LOGIN_PLAYER.getValue());
 
             if (pv == null) {

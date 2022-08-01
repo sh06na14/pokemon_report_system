@@ -41,13 +41,12 @@ public interface JpaConst {
     String REP_COL_UPDATED_AT = "updated_at"; //更新日時
 
     //Entity名
-    String ENTITY_EMP = "employee"; //従業員
-    String ENTITY_REP = "report"; //日報
+    String ENTITY_REP = "report"; //育成論
 
     //JPQL内パラメータ
-    String JPQL_PARM_CODE = "code"; //社員番号
+    String JPQL_PARM_CODE = "code"; //プレイヤー番号
     String JPQL_PARM_PASSWORD = "password"; //パスワード
-    String JPQL_PARM_PLAYER = "player"; //従業員
+    String JPQL_PARM_PLAYER = "player"; //プレイヤー
 
 
 }

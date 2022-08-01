@@ -81,7 +81,7 @@ public class PlayerService extends ServiceBase {
      */
     public long countByCode(String code) {
 
-        //指定した社員番号を保持する従業員の件数を取得する
+        //指定したプレイヤー番号を保持するプレイヤーの件数を取得する
         long players_count = (long) em.createNamedQuery("player.countRegisteredByCode", Long.class)
                 .setParameter(JpaConst.JPQL_PARM_CODE, code)
                 .getSingleResult();

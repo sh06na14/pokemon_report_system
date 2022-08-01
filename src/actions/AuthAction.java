@@ -60,18 +60,18 @@ public class AuthAction extends ActionBase {
         String plainPass = getRequestParam(AttributeConst.PLAYER_PASS);
         String pepper = getContextScope(PropertyConst.PEPPER);
 
-        //有効な従業員か認証する
-        Boolean isValidEmployee = service.validateLogin(code, plainPass, pepper);
+        //有効なプレイヤーか認証する
+        Boolean isValidPlayer = service.validateLogin(code, plainPass, pepper);
 
-        if (isValidEmployee) {
+        if (isValidPlayer) {
             //認証成功の場合
 
             //CSRF対策 tokenのチェック
             if (checkToken()) {
 
-                //ログインした従業員のDBデータを取得
+                //ログインしたプレイヤーのDBデータを取得
                 PlayerView pv = service.findOne(code, plainPass, pepper);
-                //セッションにログインした従業員を設定
+                //セッションにログインしたプレイヤーを設定
                 putSessionScope(AttributeConst.LOGIN_PLAYER, pv);
                 //セッションにログイン完了のフラッシュメッセージを設定
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGINED.getMessage());
@@ -100,7 +100,7 @@ public class AuthAction extends ActionBase {
      */
     public void logout() throws ServletException, IOException {
 
-        //セッションからログイン従業員のパラメータを削除
+        //セッションからログインプレイヤーのパラメータを削除
         removeSessionScope(AttributeConst.LOGIN_PLAYER);
 
         //セッションにログアウト時のフラッシュメッセージを追加

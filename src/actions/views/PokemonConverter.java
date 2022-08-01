@@ -81,8 +81,8 @@ public class PokemonConverter {
 
     /**
      * Viewモデルの全フィールドの内容をDTOモデルのフィールドにコピーする
-     * @param e DTOモデル(コピー先)
-     * @param ev Viewモデル(コピー元)
+     * @param p DTOモデル(コピー先)
+     * @param pv Viewモデル(コピー元)
      */
     public static void copyViewToModel(Pokemon p, PokemonView pv) {
         p.setId(pv.getId());
