@@ -7,9 +7,9 @@ public interface JpaConst {
     //データ取得件数の最大値
     int ROW_PER_PAGE = 15; //1ページに表示するレコードの数
 
-    //従業員テーブル
+    //プレイヤーテーブル
     String TABLE_PLayer = "players"; //テーブル名
-    //従業員テーブルカラム
+    //プレイヤーテーブルカラム
     String PLayer_COL_ID = "id"; //id
     String PLayer_COL_CODE = "code"; //プレイヤー番号
     String PLayer_COL_NAME = "name"; //氏名

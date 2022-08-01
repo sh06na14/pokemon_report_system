@@ -39,7 +39,7 @@ public class ReportAction extends ActionBase {
      */
     public void index() throws ServletException, IOException {
 
-        //指定されたページ数の一覧画面に表示する日報データを取得
+        //指定されたページ数の一覧画面に表示する育成論データを取得
         int page = getPage();
         List<ReportView> reports = service.getAllPerPage(page);
 
